@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { CategoryController } from './controller/categories/category.controller';
+import { CategoryController } from './controller/category.controller';
 
 @Module({
   controllers: [CategoryController]
