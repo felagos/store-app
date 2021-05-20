@@ -2,7 +2,7 @@ import { Controller, Get, Post, Put, Param, ParseIntPipe, Delete, Body } from '@
 import { CreateUserDto, UpdateUserDto } from '../../dto/user.dto';
 import { UsersService } from '../../services/users/users.service';
 
-@Controller('users')
+@Controller('user')
 export class UsersController {
     constructor(private usersService: UsersService) { }
 

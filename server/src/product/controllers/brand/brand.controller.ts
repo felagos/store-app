@@ -3,7 +3,7 @@ import { CreateBrandDto, UpdateBrandDto } from '../../dto/brand.category';
 import { BrandService } from '../../services/brand/brand.service';
 
 @Controller('brand')
-export class BrandsController {
+export class BrandController {
     constructor(private brandsService: BrandService) { }
 
     @Get()
