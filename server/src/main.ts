@@ -6,6 +6,7 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
+  const port = configService.get('APP_PORT');
 
   app.setGlobalPrefix("api");
   app.useGlobalPipes(
@@ -14,6 +15,7 @@ async function bootstrap() {
       forbidNonWhitelisted: true,
     }),
   );
-  await app.listen(configService.get("PORT"));
+  console.log(`PORT: ${port}`);
+  await app.listen(port);
 }
 bootstrap();
