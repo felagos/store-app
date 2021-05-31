@@ -6,6 +6,7 @@ import { ProductModule } from './product/product.module';
 import { UserModule } from './user/user.module';
 import config from './config';
 import { envSchema } from './schemas';
+import { DatabaseModule } from './database/database.module';
 
 @Module({
   imports: [
@@ -16,7 +17,8 @@ import { envSchema } from './schemas';
       isGlobal: true,
       load: [config],
       validationSchema: envSchema
-    })
+    }),
+    DatabaseModule
   ],
   controllers: [AppController],
   providers: [],
