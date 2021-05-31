@@ -6,7 +6,6 @@ import { CategoryController } from './controllers/category/category.controller';
 import { ProductController } from './controllers/product/product.controller';
 import { BrandController } from './controllers/brand/brand.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Product } from './entities/product.entity';
 import { ProductRepository } from './repository/product.repository';
 import { BrandRepository } from './repository/brand.repository';
 import { CategoryRepository } from './repository/category.repository';
