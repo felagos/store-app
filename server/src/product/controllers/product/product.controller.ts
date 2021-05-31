@@ -1,6 +1,6 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { CreateProductDTO } from '../../dto/product.dto';
+import { CreateProductDTO, UpdateProductDTO } from '../../dto/product.dto';
 import { ProductService } from '../../services/product/product.service';
 
 @ApiTags('product')
@@ -22,6 +22,17 @@ export class ProductController {
     @Post()
     create(@Body() payload: CreateProductDTO) {
         return this.productService.create(payload);
+    }
+
+    @Delete(':id')
+    @HttpCode(HttpStatus.NO_CONTENT)
+    remove(@Param('id', ParseIntPipe) id: number) {
+        return this.productService.remove(id);
+    }
+
+    @Put(':id')
+    update(@Param('id') id: number, @Body() payload: UpdateProductDTO) {
+      return this.productService.update(id, payload);
     }
 
 }
