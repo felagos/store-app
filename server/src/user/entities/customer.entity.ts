@@ -1,4 +1,5 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, CreateDateColumn, Entity, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { User } from "./user.entity";
 
 @Entity({ name: 'customers' })
 export class Customer extends BaseEntity {
@@ -13,4 +14,20 @@ export class Customer extends BaseEntity {
 
     @Column()
     phone: string;
+
+    @CreateDateColumn({
+        type: 'timestamptz',
+        default: () => 'CURRENT_TIMESTAMP',
+    })
+    createdAt: Date;
+
+    @UpdateDateColumn({
+        type: 'timestamptz',
+        default: () => 'CURRENT_TIMESTAMP',
+    })
+    updatedAt: Date;
+
+    @OneToOne(() => User, user => user.customer, { nullable: true })
+    user: User;
+
 }

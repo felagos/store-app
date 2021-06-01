@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Param, ParseIntPipe, Delete, Body } from '@nestjs/common';
+import { Controller, Get, Post, Put, Param, ParseIntPipe, Delete, Body, HttpCode, HttpStatus } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { CreateUserDto, UpdateUserDto } from '../../dto/user.dto';
 import { UsersService } from '../../services/users/users.service';
@@ -7,11 +7,6 @@ import { UsersService } from '../../services/users/users.service';
 @Controller('user')
 export class UsersController {
     constructor(private usersService: UsersService) { }
-
-    @Get()
-    findAll() {
-        return this.usersService.findAll();
-    }
 
     @Get(':id/orders')
     getOrder(@Param('id', ParseIntPipe) id: number) {
@@ -29,7 +24,8 @@ export class UsersController {
     }
 
     @Delete(':id')
+    @HttpCode(HttpStatus.NO_CONTENT)
     remove(@Param('id', ParseIntPipe) id: number) {
-        return this.usersService.remove(+id);
+        return this.usersService.remove(id);
     }
 }

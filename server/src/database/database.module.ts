@@ -16,8 +16,6 @@ import config from '../config';
                     username: username,
                     password,
                     database: dbName,
-                    autoLoadEntities: true,
-                    synchronize: true,
                     entities: [__dirname + "/../**/*.entity.{js,ts}"]
                 };
             },

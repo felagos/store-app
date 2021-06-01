@@ -1,4 +1,5 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Customer } from "./customer.entity";
 
 @Entity({ name: 'users' })
 export class User extends BaseEntity {
@@ -8,10 +9,15 @@ export class User extends BaseEntity {
 
     @Column({ unique: true })
     email: string;
-    
+
     @Column()
     password: string;
-    
+
     @Column()
     role: string;
+
+    @OneToOne(() => Customer, customer => customer.user, { nullable: true })
+    @JoinColumn({ name: 'id_customer' })
+    customer: Customer;
+
 }
