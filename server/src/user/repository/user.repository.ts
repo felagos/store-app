@@ -5,9 +5,8 @@ import { User } from "../entities/user.entity";
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
 
-    createUser(userDto: CreateUserDto): Promise<User> {
-        const newUser = this.create(userDto);
-        return this.save(newUser);
+    createUser(user: User): Promise<User> {
+        return this.save(user);
     }
 
     updateUser(user: User, changes: UpdateUserDto): Promise<User> {

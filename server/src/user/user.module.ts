@@ -6,13 +6,14 @@ import { CustomerController } from './controllers/customer/customer.controller';
 import { ProductModule } from '../product/product.module';
 import { UserRepository } from './repository/user.repository';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { CustomerRepository } from './repository/customer.repository';
 
 @Module({
   providers: [UsersService, CustomersService],
   controllers: [UsersController, CustomerController],
   imports: [
     ProductModule,
-    TypeOrmModule.forFeature([UserRepository])
+    TypeOrmModule.forFeature([UserRepository, CustomerRepository])
   ]
 })
 export class UserModule {}

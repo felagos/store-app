@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { CreateCustomerDto, UpdateCustomerDto } from '../../dto/customer.dto';
 import { CustomersService } from '../../services/customers/customers.service';
@@ -29,6 +29,7 @@ export class CustomerController {
     }
 
     @Delete(':id')
+    @HttpCode(HttpStatus.NO_CONTENT)
     remove(@Param('id', ParseIntPipe) id: number) {
         return this.customersService.remove(+id);
     }
