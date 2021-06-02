@@ -1,4 +1,5 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Brand } from "./brand.entity";
 
 @Entity({ name: 'products' })
 export class Product extends BaseEntity {
@@ -27,4 +28,7 @@ export class Product extends BaseEntity {
     @UpdateDateColumn({ name: 'updated_at', type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
     updatedAt: Date;
 
+    @ManyToOne(() => Brand)
+    @JoinColumn({ name: 'id_brand' })
+    brand: Brand;
 }
