@@ -1,5 +1,6 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { Brand } from "./brand.entity";
+import { Category } from "./category.entity";
 
 @Entity({ name: 'products' })
 export class Product extends BaseEntity {
@@ -9,16 +10,16 @@ export class Product extends BaseEntity {
 
     @Column({ unique: true })
     name: string;
-    
+
     @Column()
     description: string;
-    
+
     @Column()
     price: number;
-    
+
     @Column()
     stock: number;
-    
+
     @Column()
     image: string;
 
@@ -31,4 +32,9 @@ export class Product extends BaseEntity {
     @ManyToOne(() => Brand, { eager: true })
     @JoinColumn({ name: 'id_brand' })
     brand: Brand;
+
+    @ManyToMany(() => Category, category => category.products)
+    @JoinTable({ name: 'products_category' })
+    categories: Category[];
+
 }
