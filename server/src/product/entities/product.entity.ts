@@ -28,7 +28,7 @@ export class Product extends BaseEntity {
     @UpdateDateColumn({ name: 'updated_at', type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
     updatedAt: Date;
 
-    @ManyToOne(() => Brand)
+    @ManyToOne(() => Brand, { eager: true })
     @JoinColumn({ name: 'id_brand' })
     brand: Brand;
 }

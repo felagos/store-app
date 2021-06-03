@@ -3,11 +3,14 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { CreateProductDTO, UpdateProductDTO } from '../../dto/product.dto';
 import { Product } from '../../entities/product.entity';
 import { ProductRepository } from '../../repository/product.repository';
+import { BrandService } from '../brand/brand.service';
 
 @Injectable()
 export class ProductService {
 
-    constructor(@InjectRepository(ProductRepository) private productRepository: ProductRepository) {}
+    constructor(
+        @InjectRepository(ProductRepository) private productRepository: ProductRepository,
+        private brandService: BrandService) {}
 
     findAll(): Promise<Product[]> {
         return this.productRepository.find();
@@ -19,8 +22,9 @@ export class ProductService {
         return product;
     }
 
-    create(payload: CreateProductDTO): Promise<Product> {
-        return this.productRepository.createProduct(payload);
+    async create(payload: CreateProductDTO): Promise<Product> {
+        const brand = await this.brandService.findOne(payload.brandId);
+        return this.productRepository.createProduct(payload, brand);
     }
 
     async update(id: number, payload: UpdateProductDTO): Promise<Product> {
@@ -34,3 +38,5 @@ export class ProductService {
     }
 
 }
+
+
