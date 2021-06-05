@@ -33,6 +33,10 @@ export class CreateProductDTO {
     @ApiProperty()
     readonly brandId: number;
 
+    @IsNotEmpty()
+    @ApiProperty()
+    readonly categoriesIds: number[];
+
 }
 
 export class UpdateProductDTO extends PartialType(CreateProductDTO) {}

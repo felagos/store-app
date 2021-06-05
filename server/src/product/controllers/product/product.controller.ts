@@ -7,7 +7,7 @@ import { ProductService } from '../../services/product/product.service';
 @Controller('product')
 export class ProductController {
 
-    constructor(private productService: ProductService) {}
+    constructor(private productService: ProductService) { }
 
     @Get()
     findAll() {
@@ -27,12 +27,23 @@ export class ProductController {
     @Delete(':id')
     @HttpCode(HttpStatus.NO_CONTENT)
     remove(@Param('id', ParseIntPipe) id: number) {
-        return this.productService.remove(id);
+        this.productService.remove(id);
     }
 
     @Put(':id')
     update(@Param('id') id: number, @Body() payload: UpdateProductDTO) {
-      return this.productService.update(id, payload);
+        return this.productService.update(id, payload);
+    }
+
+    @Delete(':id/category/:categoryId')
+    @HttpCode(HttpStatus.NO_CONTENT)
+    removeCategory(@Param('id', ParseIntPipe) productId: number, @Param('id', ParseIntPipe) categoryId: number) {
+        this.productService.removeCategoryByProduct(productId, categoryId);
+    }
+
+    @Put(':id/category/:categoryId')
+    addCategoryToProduct(@Param('id') productId: number, @Param('categoryId', ParseIntPipe) categoryId: number) {
+        return this.productService.addCategoryToProduct(productId, categoryId);
     }
 
 }
