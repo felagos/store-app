@@ -1,4 +1,5 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { BaseEntity, Column, CreateDateColumn, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Order } from "./order.entity";
 import { User } from "./user.entity";
 
 @Entity({ name: 'customers' })
@@ -9,25 +10,22 @@ export class Customer extends BaseEntity {
     @Column()
     name: string;
 
-    @Column()
+    @Column({ name: 'last_name' })
     lastName: string;
 
     @Column()
     phone: string;
 
-    @CreateDateColumn({
-        type: 'timestamptz',
-        default: () => 'CURRENT_TIMESTAMP',
-    })
-    createdAt: Date;
+    @CreateDateColumn({ name: 'created_at', type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
+    createAt: Date;
 
-    @UpdateDateColumn({
-        type: 'timestamptz',
-        default: () => 'CURRENT_TIMESTAMP',
-    })
-    updatedAt: Date;
+    @UpdateDateColumn({ name: 'updated_at', type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
+    updateAt: Date;
 
     @OneToOne(() => User, user => user.customer, { nullable: true })
     user: User;
+
+    @OneToMany(() => Order, order => order.customer)
+    orders: Order[];
 
 }

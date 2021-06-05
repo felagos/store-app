@@ -42,12 +42,7 @@ export class UsersService {
     }
 
     async getOrderByUser(id: number): Promise<Order> {
-        const user = await this.findOne(id);
-        return {
-            date: new Date(),
-            user,
-            products: await this.productService.findAll()
-        };
+        return null;
     }
 
 }
