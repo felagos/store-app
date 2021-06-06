@@ -1,5 +1,6 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post, Put, Query } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { FilterProductsDto } from '../../dto/filter-products.dto';
 import { CreateProductDTO, UpdateProductDTO } from '../../dto/product.dto';
 import { ProductService } from '../../services/product/product.service';
 
@@ -10,8 +11,8 @@ export class ProductController {
     constructor(private productService: ProductService) { }
 
     @Get()
-    findAll() {
-        return this.productService.findAll();
+    findAll(@Query() filter: FilterProductsDto) {
+        return this.productService.findAllPagination(filter);
     }
 
     @Get(':id')

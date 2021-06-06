@@ -1,5 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { FilterProductsDto } from '../../dto/filter-products.dto';
+import { PaginationResponseDto } from '../../dto/pagination-response.dto';
 import { CreateProductDTO, UpdateProductDTO } from '../../dto/product.dto';
 import { Product } from '../../entities/product.entity';
 import { BrandRepository } from '../../repository/brand.repository';
@@ -14,8 +16,8 @@ export class ProductService {
         @InjectRepository(BrandRepository) private brandRepository: BrandRepository,
         @InjectRepository(CategoryRepository) private categoryRepository: CategoryRepository) { }
 
-    findAll(): Promise<Product[]> {
-        return this.productRepository.find();
+    findAllPagination(filter?: FilterProductsDto): Promise<PaginationResponseDto<Product[]>> {
+        return this.productRepository.findAllPagination(filter);
     }
 
     async findOne(id: number): Promise<Product> {

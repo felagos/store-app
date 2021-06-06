@@ -1,8 +1,9 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { BaseEntity, Column, CreateDateColumn, Entity, Index, JoinColumn, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { Brand } from "./brand.entity";
 import { Category } from "./category.entity";
 
 @Entity({ name: 'products' })
+@Index(['price', 'stock'])
 export class Product extends BaseEntity {
 
     @PrimaryGeneratedColumn()
