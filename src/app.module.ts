@@ -7,6 +7,7 @@ import { UserModule } from './user/user.module';
 import config from './config';
 import { envSchema } from './schemas';
 import { DatabaseModule } from './database/database.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -18,7 +19,8 @@ import { DatabaseModule } from './database/database.module';
       load: [config],
       validationSchema: envSchema
     }),
-    DatabaseModule
+    DatabaseModule,
+    AuthModule
   ],
   controllers: [AppController],
   providers: [],

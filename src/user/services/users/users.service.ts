@@ -2,19 +2,17 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { User } from '../../entities/user.entity';
 import { CreateUserDto, UpdateUserDto } from '../../dto/user.dto';
 import { Order } from '../../entities/order.entity';
-import { ProductService } from '../../../product/services/product/product.service';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserRepository } from '../../repository/user.repository';
-import { CustomerRepository } from '../../repository/customer.repository';
 import { CustomersService } from '../customers/customers.service';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
 
     constructor(
         @InjectRepository(UserRepository) private userRepo: UserRepository,
-        private customerService: CustomersService,
-        private productService: ProductService) { }
+        private customerService: CustomersService) { }
 
     async findOne(id: number): Promise<User> {
         const user = await this.userRepo.findOne(id);
@@ -24,7 +22,9 @@ export class UsersService {
 
     async create(data: CreateUserDto) {
         const newCustomer = this.userRepo.create(data);
-        if(data.customerId) {
+        newCustomer.password = await bcrypt.hash(newCustomer.password, 10);
+
+        if (data.customerId) {
             const customer = await this.customerService.findOne(data.customerId);
             newCustomer.customer = customer;
         }
@@ -43,6 +43,10 @@ export class UsersService {
 
     async getOrderByUser(id: number): Promise<Order> {
         return null;
+    }
+
+    findByEmail(email: string): Promise<User> {
+        return this.userRepo.findByEmail(email);
     }
 
 }

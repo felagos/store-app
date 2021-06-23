@@ -1,26 +1,35 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post, Put, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post, Put, Query, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { Public } from '../../../auth/decorator/public.decorator';
+import { Roles } from '../../../auth/decorator/roles.decorator';
+import { JwtAuthGuard } from '../../../auth/guards/jwt-auth.guard';
+import { RolesGuard } from '../../../auth/guards/roles.guard';
+import { Role } from '../../../auth/model/role.model';
 import { FilterProductsDto } from '../../dto/filter-products.dto';
 import { CreateProductDTO, UpdateProductDTO } from '../../dto/product.dto';
 import { ProductService } from '../../services/product/product.service';
 
 @ApiTags('product')
 @Controller('product')
+@UseGuards(JwtAuthGuard, RolesGuard)
 export class ProductController {
 
     constructor(private productService: ProductService) { }
 
     @Get()
+    @Public()
     findAll(@Query() filter: FilterProductsDto) {
         return this.productService.findAllPagination(filter);
     }
 
     @Get(':id')
+    @Public()
     findById(@Param('id', ParseIntPipe) id: number) {
         return this.productService.findOne(id);
     }
 
     @Post()
+    @Roles(Role.ADMIN)
     create(@Body() payload: CreateProductDTO) {
         return this.productService.create(payload);
     }

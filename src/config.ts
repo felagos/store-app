@@ -9,6 +9,8 @@ export default registerAs('config', () => {
             port: +process.env.DB_PORT,
             username: process.env.DB_USER,
             password: process.env.DB_PASSWORD,
-        }
+        },
+        jwtKey: process.env.JWT_KEY,
+        jwtExpire: process.env.JWT_EXPIRE
     }
 });

@@ -14,4 +14,8 @@ export class UserRepository extends Repository<User> {
         return this.save(user);
     }
 
+    findByEmail(email: string): Promise<User> {
+        return this.findOne({ where: { email } });
+    }
+
 }

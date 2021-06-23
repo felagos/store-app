@@ -20,6 +20,7 @@ import { OrderItemResitory } from './repository/order-item.repository';
   imports: [
     ProductModule,
     TypeOrmModule.forFeature([UserRepository, CustomerRepository, OrderRespository, OrderItemResitory])
-  ]
+  ],
+  exports: [UsersService]
 })
 export class UserModule { }
